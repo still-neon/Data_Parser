@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records>
+    <record>
+        <date>August 2018</date>
+        <pairs>
+            <pair>
+                <text>любая, хрень</text>
+                <value>275</value>
+            </pair>
+            <pair>
+                <text>очень хорошо</text>
+                <value>646,56</value>
+            </pair>
+            <pair>
+                <text>жрачка</text>
+                <value>37.33</value>
+            </pair>
+        </pairs>
+    </record>
+    <record>
+        <date>September 2018</date>
+        <pairs>
+            <pair>
+                <text>любая хрень 123</text>
+                <value>$217,33</value>
+            </pair>
+            <pair>
+                <text>ни о чём,</text>
+                <value>$136</value>
+            </pair>
+            <pair>
+                <text>жрачка2</text>
+                <value>$200.15</value>
+            </pair>
+        </pairs>
+    </record>
+</records>
