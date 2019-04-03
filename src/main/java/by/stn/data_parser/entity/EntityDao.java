@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface EntityDao<T extends Entity> {
 
-	Entity get(long id) throws Exception;
+	T getEntity(long id) throws Exception;
 
-	List<Entity> getAll() throws Exception;
+	List<T> getAllEntities() throws Exception;
 
-	long saveOrUpdate(Entity entity) throws SQLException;
+	long saveOrUpdateEntity(T entity) throws SQLException;
 
-	boolean delete(long id) throws SQLException;
+	boolean deleteEntity(long id) throws SQLException;
 }

@@ -1,13 +1,16 @@
 package by.stn.data_parser.data_record;
 
+import by.stn.data_parser.Entity;
 import by.stn.data_parser.entity.AbstractEntity;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Entity(tableName = "records", columnsNames = {"name", "value", "currency", "description", "date", "timestamp"})
+@Getter
+@Setter
 public class DataRecord extends AbstractEntity {
-	@Getter
-	private long id;
 	private String name;
 	private String value;
 	private Currency currency;
@@ -15,7 +18,7 @@ public class DataRecord extends AbstractEntity {
 	private Date date;
 	private String timestamp;
 
-	public DataRecord(long id) {
+	public DataRecord(Long id) {
 		super(id);
 	}
 

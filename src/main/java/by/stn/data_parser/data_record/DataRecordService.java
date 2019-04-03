@@ -10,18 +10,18 @@ public class DataRecordService {
 	private DataRecordDao dataRecordDao;
 
 	public List<DataRecord> getDataRecords() throws Exception {
-		return dataRecordDao.getAll();
+		return dataRecordDao.getAllEntities();
 	}
 
 	public void save(List<DataRecord> updatedData) throws Exception {
-		List<DataRecord> dbData = dataRecordDao.getAll();
+		List<DataRecord> dbData = dataRecordDao.getAllEntities();
 
 		for (DataRecord callsLogEntry : getDeletedData(updatedData, dbData)) {
-			dataRecordDao.delete(callsLogEntry.getId());
+			dataRecordDao.deleteEntity(callsLogEntry.getId());
 		}
 
 		for (DataRecord callsLogEntry : getSavedData(updatedData, dbData)) {
-			dataRecordDao.saveOrUpdate(callsLogEntry);
+			dataRecordDao.saveOrUpdateEntity(callsLogEntry);
 		}
 	}
 

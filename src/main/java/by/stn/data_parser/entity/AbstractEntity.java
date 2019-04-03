@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public abstract class AbstractEntity implements Entity {
 	@Getter
-	private long id;
+	private Long id;
 
 	public AbstractEntity(long id) {
 		this.id = id;
