@@ -9,18 +9,26 @@ public class DataRecordService {
 	@Setter
 	private DataRecordDao dataRecordDao;
 
+	public DataRecordService() {
+		try {
+			dataRecordDao = new DataRecordDaoImpl();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<DataRecord> getDataRecords() throws Exception {
 		return dataRecordDao.getAllEntities();
 	}
 
 	public void save(List<DataRecord> updatedData) throws Exception {
-		List<DataRecord> dbData = dataRecordDao.getAllEntities();
+//		List<DataRecord> dbData = dataRecordDao.getAllEntities();
+//
+//		for (DataRecord callsLogEntry : getDeletedData(updatedData, dbData)) {
+//			dataRecordDao.deleteEntity(callsLogEntry.getId());
+//		}
 
-		for (DataRecord callsLogEntry : getDeletedData(updatedData, dbData)) {
-			dataRecordDao.deleteEntity(callsLogEntry.getId());
-		}
-
-		for (DataRecord callsLogEntry : getSavedData(updatedData, dbData)) {
+		for (DataRecord callsLogEntry : updatedData) {
 			dataRecordDao.saveOrUpdateEntity(callsLogEntry);
 		}
 	}

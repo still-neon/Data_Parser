@@ -29,16 +29,16 @@ public class DataRecordDaoImpl extends AbstractEntityDao<DataRecord> implements 
 	@Override
 	protected void setUpdateQueryArguments(PreparedStatement preparedStatement, DataRecord entity) throws SQLException {
 		setInsertQueryArguments(preparedStatement, entity);
-		preparedStatement.setLong(1, entity.getId());
+		preparedStatement.setInt(7, Math.toIntExact(entity.getId()));
 	}
 
 	@Override
 	protected void setInsertQueryArguments(PreparedStatement preparedStatement, DataRecord entity) throws SQLException {
-		preparedStatement.setString(2, entity.getName());
-		preparedStatement.setString(3, entity.getValue());
-		preparedStatement.setString(4, entity.getCurrency().getSymbol());
-		preparedStatement.setString(5, entity.getDescription());
-		preparedStatement.setDate(6, new Date(entity.getDate().getTime()));
-		preparedStatement.setString(7, entity.getTimestamp());
+		preparedStatement.setString(1, entity.getName());
+		preparedStatement.setString(2, entity.getValue());
+		preparedStatement.setString(3, entity.getCurrency().getSymbol());
+		preparedStatement.setString(4, entity.getDescription());
+		preparedStatement.setDate(5, new Date (entity.getDate().getTime()));
+		preparedStatement.setString(6, entity.getTimestamp());
 	}
 }

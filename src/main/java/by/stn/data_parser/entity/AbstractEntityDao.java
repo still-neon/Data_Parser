@@ -12,7 +12,7 @@ public abstract class AbstractEntityDao<T extends by.stn.data_parser.entity.Enti
 	private static final String GET_ALL_ENTITIES_QUERY_FORMAT = "SELECT * FROM %s";
 	private static final String DELETE_ENTITY_QUERY_FORMAT = "DELETE FROM %s WHERE id=%d";
 	private static final String UPDATE_ENTITY_QUERY_FORMAT = "UPDATE %s SET %s WHERE id=?";
-	private static final String INSERT_ENTITY_QUERY_FORMAT = "INSERT INTO %s (id,%s) VALUES (DEFAULT,%s) RETURNING id";
+	private static final String INSERT_ENTITY_QUERY_FORMAT = "INSERT INTO %s (%s) VALUES (%s)";
 	private static final String PREPARED_QUERY_PARAMETER_SIGN = "?";
 	private static final String PREPARED_QUERY_EQUAL_SIGN = "=";
 	private static final String PREPARED_QUERY_SEPARATOR_SIGN = ",";
@@ -46,16 +46,28 @@ public abstract class AbstractEntityDao<T extends by.stn.data_parser.entity.Enti
 		Long id = entity.getId();
 		PreparedStatement preparedStatement;
 		try (Connection connection = ConnectionFactory.getConnection()) {
+			Statement statement = connection.createStatement();
 			if (id == null) {
+
+
+//				statement.executeUpdate("Drop Table records");
+//				statement.executeUpdate("Create table records (id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), name varchar(30), value varchar(30),currency varchar(30),description varchar(30),date date,timestamp varchar(30), PRIMARY KEY (id))");
+
 				preparedStatement = connection.prepareStatement(getPreparedQueryForInsert());
 				setInsertQueryArguments(preparedStatement, entity);
-				ResultSet resultSet = preparedStatement.executeQuery();
-				resultSet.next();
-				id = resultSet.getLong(ID_COLUMN_INDEX);
+				preparedStatement.executeUpdate();
+
+
+
+//				id = resultSet.getLong(ID_COLUMN_INDEX);
 			} else {
 				preparedStatement = connection.prepareStatement(getPreparedQueryForUpdate());
 				setUpdateQueryArguments(preparedStatement, entity);
 				preparedStatement.executeUpdate();
+			}
+			ResultSet resultSet = statement.executeQuery(String.format(GET_ALL_ENTITIES_QUERY_FORMAT, getTableName()));
+			while (resultSet.next()) {
+				System.out.printf("%d\t%s\t%s\t%s\t%s\t%s\t%s\n", resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("value"), resultSet.getString("currency"), resultSet.getString("description"), resultSet.getString("date"), resultSet.getString("timestamp"));
 			}
 		}
 		return id;
@@ -103,7 +115,7 @@ public abstract class AbstractEntityDao<T extends by.stn.data_parser.entity.Enti
 	private String getPreparedQueryForUpdate() {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (String column : getColumnsNames()) {
-			stringBuilder.append(column).append(PREPARED_QUERY_EQUAL_SIGN).append(PREPARED_QUERY_SEPARATOR_SIGN);
+			stringBuilder.append(column).append(PREPARED_QUERY_EQUAL_SIGN).append(PREPARED_QUERY_PARAMETER_SIGN).append(PREPARED_QUERY_SEPARATOR_SIGN);
 		}
 		return String.format(UPDATE_ENTITY_QUERY_FORMAT, getTableName(), stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString());
 	}

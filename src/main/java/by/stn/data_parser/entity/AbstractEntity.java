@@ -6,7 +6,7 @@ public abstract class AbstractEntity implements Entity {
 	@Getter
 	private Long id;
 
-	public AbstractEntity(long id) {
+	public AbstractEntity(Long id) {
 		this.id = id;
 	}
 }
